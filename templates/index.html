@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TICK.IT - Cinema Ticketing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="logo">TICK.<span>IT</span></div>
+        <div class="nav-buttons">
+            <a href="/movies" class="nav-btn">Movies</a>
+            <a href="/" class="nav-btn active">Home</a>
+            <a href="/booking" class="nav-btn">Booking</a>
+        </div>
+        <div class="search-wrap">
+            <input type="text" class="search-input" placeholder="Search...">
+            <div class="user-info">
+                <span class="user-greeting">Hi, {{ user_name }}!</span>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO CAROUSEL ===== -->
+    <section class="hero-section">
+        <div class="trending-label">TRENDING NOW</div>
+        <div class="carousel">
+            <div class="carousel-inner" id="carouselInner">
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='images/stranger_things.png') }}" alt="Stranger Things">
+                </div>
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='images/avatar_fire_ash.png') }}" alt="Avatar Fire and Ash">
+                </div>
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='images/walking_dead.png') }}" alt="The Walking Dead">
+                </div>
+            </div>
+            <div class="carousel-dots">
+                <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+                <button class="carousel-dot" onclick="goToSlide(1)"></button>
+                <button class="carousel-dot" onclick="goToSlide(2)"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== AVAILABLE ON ===== -->
+    <section class="available-section">
+        <div class="available-left">
+            <p class="available-title">Available on</p>
+            <div class="store-badges">
+                <a href="#">
+                    <img src="{{ url_for('static', filename='images/store_badges.png') }}" alt="App Store and Google Play" class="badges-img">
+                </a>
+            </div>
+        </div>
+        <div class="social-icons">
+            <a href="#" title="Facebook">
+                <img src="{{ url_for('static', filename='images/facebook.png') }}" alt="Facebook" class="social-img">
+            </a>
+            <a href="#" title="Instagram">
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram" class="social-img">
+            </a>
+            <a href="#" title="YouTube">
+                <img src="{{ url_for('static', filename='images/youtube.png') }}" alt="YouTube" class="social-img">
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== RED SECTION ===== -->
+    <section class="red-section">
+        <div class="red-overlay"></div>
+        <div class="about-block">
+            <h2 class="section-title">About us</h2>
+            <p class="about-text">
+                TICK.IT is a Cinema ticketing system that allows you to book a ticket to watch movies
+                in cinema. The user of this system is the Admin and Staff. The Admin controls
+                updating what movies this week is available and others. While the Staff is in charge in
+                filling up the details needed from customer to book the ticket. There are just specific
+                Malls and places that we offer like SM seaside Cebu Cinema, Gaisano Grand
+                Minglanilla Cinema, Nustar Cebu Cinema, Cebu IL CORSO Cinema, UC(University of
+                Cantao-an) and TOPS Cebu skydom.
+            </p>
+        </div>
+        <div class="contact-block">
+            <h2 class="section-title">Contacts</h2>
+            <p class="contact-text">
+                Feel free to contact our online social platforms (facebook, instagram,
+                whatsapp, telegram, tiktok, viber and gmail): TICK.IT.ph<br><br>
+                Contact no. 0975 - 078 - 8092
+            </p>
+        </div>
+        <div class="footer-bar">
+            <p class="footer-text">&#169; All rights reserved</p>
+        </div>
+    </section>
+
+    <script>
+        let current = 0;
+        const total = 3;
+        const inner = document.getElementById("carouselInner");
+        const dots  = document.querySelectorAll(".carousel-dot");
+
+        function goToSlide(n) {
+            current = n;
+            inner.style.transform = "translateX(-" + (100 / total * n) + "%)";
+            dots.forEach((d, i) => d.classList.toggle("active", i === n));
+        }
+
+        setInterval(() => goToSlide((current + 1) % total), 4000);
+    </script>
+
+</body>
+</html>

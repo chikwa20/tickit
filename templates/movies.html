@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TICK.IT - Movies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='movies.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="logo">TICK.<span>IT</span></div>
+        <div class="nav-buttons">
+            <a href="/movies" class="nav-btn active">Movies</a>
+            <a href="/" class="nav-btn">Home</a>
+            <a href="/booking" class="nav-btn">Booking</a>
+        </div>
+        <div class="search-wrap">
+            <input type="text" class="search-input" placeholder="Search...">
+            <div class="user-info">
+                <span class="user-greeting">Hi, {{ user_name }}!</span>
+                <a href="/logout" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO CAROUSEL ===== -->
+    <section class="hero-section">
+        <div class="trending-label">TRENDING NOW</div>
+        <div class="carousel">
+            <div class="carousel-inner" id="carouselInner">
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='images/stranger_things.png') }}" alt="Stranger Things">
+                </div>
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='images/avatar_fire_ash.png') }}" alt="Avatar Fire and Ash">
+                </div>
+                <div class="carousel-slide">
+                    <img src="{{ url_for('static', filename='images/walking_dead.png') }}" alt="The Walking Dead">
+                </div>
+            </div>
+            <div class="carousel-dots">
+                <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+                <button class="carousel-dot" onclick="goToSlide(1)"></button>
+                <button class="carousel-dot" onclick="goToSlide(2)"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MOVIES SECTION ===== -->
+    <section class="movies-section">
+        <div class="movies-bg">
+            <div class="movies-overlay"></div>
+
+            <h2 class="movies-heading">Movies that will be available for this week...</h2>
+
+            <!-- ROW 1 -->
+            <div class="movies-grid">
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie1.png') }}" alt="Movie 1" class="movie-poster">
+                    <div class="movie-badge badge-yesterday">Played yesterday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie2.png') }}" alt="Movie 2" class="movie-poster">
+                    <div class="movie-badge badge-yesterday">Played yesterday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie3.png') }}" alt="Movie 3" class="movie-poster">
+                    <div class="movie-badge badge-today">Available today...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie4.png') }}" alt="Movie 4" class="movie-poster">
+                    <div class="movie-badge badge-today">Available today...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie5.png') }}" alt="Movie 5" class="movie-poster">
+                    <div class="movie-badge badge-sunday">Available this Sunday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie6.png') }}" alt="Movie 6" class="movie-poster">
+                    <div class="movie-badge badge-sunday">Available this Sunday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+            </div>
+
+            <!-- ROW 2 -->
+            <div class="movies-grid">
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie7.png') }}" alt="Movie 7" class="movie-poster">
+                    <div class="movie-badge badge-today">Available today...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie8.png') }}" alt="Movie 8" class="movie-poster">
+                    <div class="movie-badge badge-soldout">Sold out....</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie9.png') }}" alt="Movie 9" class="movie-poster">
+                    <div class="movie-badge badge-yesterday">Played yesterday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie10.png') }}" alt="Movie 10" class="movie-poster">
+                    <div class="movie-badge badge-soldout">Sold out....</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie11.png') }}" alt="Movie 11" class="movie-poster">
+                    <div class="movie-badge badge-friday">Available this Friday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+                <div class="movie-card">
+                    <img src="{{ url_for('static', filename='images/movies/movie12.png') }}" alt="Movie 12" class="movie-poster">
+                    <div class="movie-badge badge-sunday">Available this Sunday...</div>
+                    <div class="movie-price">450 PHP</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="footer-bar">
+        <p class="footer-text">&#169; All rights reserved</p>
+    </div>
+
+    <script>
+        let current = 0;
+        const total = 3;
+        const inner = document.getElementById("carouselInner");
+        const dots  = document.querySelectorAll(".carousel-dot");
+
+        function goToSlide(n) {
+            current = n;
+            inner.style.transform = "translateX(-" + (100 / total * n) + "%)";
+            dots.forEach((d, i) => d.classList.toggle("active", i === n));
+        }
+
+        setInterval(() => goToSlide((current + 1) % total), 4000);
+    </script>
+
+</body>
+</html>
