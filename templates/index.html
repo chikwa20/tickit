@@ -9,111 +9,342 @@
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
-        <div class="logo">TICK.<span>IT</span></div>
-        <div class="nav-buttons">
-            <a href="/movies" class="nav-btn">Movies</a>
-            <a href="/" class="nav-btn active">Home</a>
-            <a href="/booking" class="nav-btn">Booking</a>
-        </div>
-        <div class="search-wrap">
-            <input type="text" class="search-input" placeholder="Search...">
-            <div class="user-info">
-                <span class="user-greeting">Hi, {{ user_name }}!</span>
-                <a href="/logout" class="logout-btn">Logout</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ===== HERO CAROUSEL ===== -->
-    <section class="hero-section">
-        <div class="trending-label">TRENDING NOW</div>
-        <div class="carousel">
-            <div class="carousel-inner" id="carouselInner">
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='images/stranger_things.png') }}" alt="Stranger Things">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='images/avatar_fire_ash.png') }}" alt="Avatar Fire and Ash">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='images/walking_dead.png') }}" alt="The Walking Dead">
-                </div>
-            </div>
-            <div class="carousel-dots">
-                <button class="carousel-dot active" onclick="goToSlide(0)"></button>
-                <button class="carousel-dot" onclick="goToSlide(1)"></button>
-                <button class="carousel-dot" onclick="goToSlide(2)"></button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== AVAILABLE ON ===== -->
-    <section class="available-section">
-        <div class="available-left">
-            <p class="available-title">Available on</p>
-            <div class="store-badges">
-                <a href="#">
-                    <img src="{{ url_for('static', filename='images/store_badges.png') }}" alt="App Store and Google Play" class="badges-img">
-                </a>
-            </div>
-        </div>
-        <div class="social-icons">
-            <a href="#" title="Facebook">
-                <img src="{{ url_for('static', filename='images/facebook.png') }}" alt="Facebook" class="social-img">
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <div class="profile-dropdown" id="profileDropdown">
+            <a href="#" class="profile-btn" onclick="toggleDropdown(event)">
+                <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-img">
             </a>
-            <a href="#" title="Instagram">
-                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram" class="social-img">
-            </a>
-            <a href="#" title="YouTube">
-                <img src="{{ url_for('static', filename='images/youtube.png') }}" alt="YouTube" class="social-img">
-            </a>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-user-header">
+                    <div class="dropdown-user-name">{{ user_name }}</div>
+                    <div class="dropdown-user-role">Member</div>
+                </div>
+                <a href="/profile"         class="dropdown-item"><span class="dropdown-icon">👤</span> View Profile</a>
+                <a href="/settings"        class="dropdown-item"><span class="dropdown-icon">⚙️</span> Settings</a>
+                <a href="/change-password" class="dropdown-item"><span class="dropdown-icon">🔑</span> Change Password</a>
+                <a href="/my-bookings"     class="dropdown-item"><span class="dropdown-icon">🎟️</span> My Bookings</a>
+                <a href="/notifications"   class="dropdown-item"><span class="dropdown-icon">🔔</span> Notifications</a>
+                <div class="dropdown-divider"></div>
+                <a href="/help"            class="dropdown-item"><span class="dropdown-icon">❓</span> Help & Support</a>
+            </div>
         </div>
-    </section>
+        <span style="font-weight:700;font-size:13px;color:#fff;white-space:nowrap;">{{ user_name }}</span>
+    </div>
 
-    <!-- ===== RED SECTION ===== -->
-    <section class="red-section">
-        <div class="red-overlay"></div>
-        <div class="about-block">
-            <h2 class="section-title">About us</h2>
-            <p class="about-text">
-                TICK.IT is a Cinema ticketing system that allows you to book a ticket to watch movies
-                in cinema. The user of this system is the Admin and Staff. The Admin controls
-                updating what movies this week is available and others. While the Staff is in charge in
-                filling up the details needed from customer to book the ticket. There are just specific
-                Malls and places that we offer like SM seaside Cebu Cinema, Gaisano Grand
-                Minglanilla Cinema, Nustar Cebu Cinema, Cebu IL CORSO Cinema, UC(University of
-                Cantao-an) and TOPS Cebu skydom.
-            </p>
-        </div>
-        <div class="contact-block">
-            <h2 class="section-title">Contacts</h2>
-            <p class="contact-text">
-                Feel free to contact our online social platforms (facebook, instagram,
-                whatsapp, telegram, tiktok, viber and gmail): TICK.IT.ph<br><br>
-                Contact no. 0975 - 078 - 8092
-            </p>
-        </div>
-        <div class="footer-bar">
-            <p class="footer-text">&#169; All rights reserved</p>
-        </div>
-    </section>
+    <div class="logo">TICK.<span>IT</span></div>
 
-    <script>
-        let current = 0;
-        const total = 3;
-        const inner = document.getElementById("carouselInner");
-        const dots  = document.querySelectorAll(".carousel-dot");
+    <div class="nav-buttons">
+        <a href="/movies"  class="nav-btn">Movies</a>
+        <a href="/home"    class="nav-btn active">Home</a>
+        <a href="/booking" class="nav-btn">Booking</a>
+    </div>
 
-        function goToSlide(n) {
-            current = n;
-            inner.style.transform = "translateX(-" + (100 / total * n) + "%)";
-            dots.forEach((d, i) => d.classList.toggle("active", i === n));
+    <div class="search-wrap">
+        <input type="text" class="search-input" placeholder="Search movies..." id="searchInput">
+        <div class="user-info">
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ===== HERO CAROUSEL ===== -->
+<section class="hero-section">
+    <div class="trending-label">TRENDING NOW</div>
+    <div class="carousel">
+        <div class="carousel-inner" id="carouselInner">
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/stranger_things_mov.png') }}" alt="Stranger Things">
+            </div>
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/avatar_fire_ash.png') }}" alt="Avatar Fire and Ash">
+            </div>
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/walking_dead_mov.png') }}" alt="The Walking Dead">
+            </div>
+        </div>
+        <div class="carousel-dots">
+            <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+            <button class="carousel-dot"        onclick="goToSlide(1)"></button>
+            <button class="carousel-dot"        onclick="goToSlide(2)"></button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TRENDING THIS WEEK ===== -->
+<section class="home-section">
+    <div class="section-header">
+        <h2 class="home-section-title">🔥 Trending This Week</h2>
+        <a href="/movies" class="see-all-link">See all →</a>
+    </div>
+    <div class="trending-movies-grid">
+        <div class="trending-movie-card">
+            <img src="{{ url_for('static', filename='images/movies/stranger_things_mov.png') }}" alt="Stranger Things" class="trending-movie-img">
+            <div class="trending-movie-info">
+                <div class="trending-movie-name">Stranger Things</div>
+                <div class="trending-movie-genre">Sci-Fi / Horror</div>
+                <div class="movie-rating">⭐ 8.7 / 10</div>
+                <div class="trending-movie-status badge-today-inline">🟢 Available Today</div>
+                <div class="trending-movie-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Book Now</a>
+            </div>
+        </div>
+        <div class="trending-movie-card">
+            <img src="{{ url_for('static', filename='images/movies/avatar_fire_ash_movie.png') }}" alt="Avatar Fire and Ash" class="trending-movie-img">
+            <div class="trending-movie-info">
+                <div class="trending-movie-name">Avatar: Fire and Ash</div>
+                <div class="trending-movie-genre">Sci-Fi / Action</div>
+                <div class="movie-rating">⭐ 9.1 / 10</div>
+                <div class="trending-movie-status badge-today-inline">🟢 Available Today</div>
+                <div class="trending-movie-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Book Now</a>
+            </div>
+        </div>
+        <div class="trending-movie-card">
+            <img src="{{ url_for('static', filename='images/movies/walking_dead_mov.png') }}" alt="The Walking Dead" class="trending-movie-img">
+            <div class="trending-movie-info">
+                <div class="trending-movie-name">The Walking Dead</div>
+                <div class="trending-movie-genre">Horror / Drama</div>
+                <div class="movie-rating">⭐ 8.2 / 10</div>
+                <div class="trending-movie-status badge-today-inline">🟢 Available Today</div>
+                <div class="trending-movie-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Book Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== NOW SHOWING TODAY ===== -->
+<section class="home-section dark-section">
+    <div class="section-header">
+        <h2 class="home-section-title">🎬 Now Showing Today</h2>
+        <a href="/movies" class="see-all-link">See all →</a>
+    </div>
+    <div class="mini-cards-row">
+        <div class="mini-card">
+            <img src="{{ url_for('static', filename='images/movies/deadpool_&_wolverine.png') }}" alt="Deadpool & Wolverine" class="mini-card-img">
+            <div class="mini-card-name">Deadpool &amp; Wolverine</div>
+            <div class="mini-card-genre">Action</div>
+            <div class="mini-card-price">450 PHP</div>
+            <a href="/booking" class="mini-book-btn">Book</a>
+        </div>
+        <div class="mini-card">
+            <img src="{{ url_for('static', filename='images/movies/Hoppers.png') }}" alt="Hoppers" class="mini-card-img">
+            <div class="mini-card-name">Hoppers</div>
+            <div class="mini-card-genre">Animation</div>
+            <div class="mini-card-price">450 PHP</div>
+            <a href="/booking" class="mini-book-btn">Book</a>
+        </div>
+        <div class="mini-card">
+            <img src="{{ url_for('static', filename='images/movies/minecraft_movie.png') }}" alt="Minecraft Movie" class="mini-card-img">
+            <div class="mini-card-name">Minecraft Movie</div>
+            <div class="mini-card-genre">Animation</div>
+            <div class="mini-card-price">450 PHP</div>
+            <a href="/booking" class="mini-book-btn">Book</a>
+        </div>
+        <div class="mini-card">
+            <img src="{{ url_for('static', filename='images/movies/captain_america_brave_new_world.png') }}" alt="Captain America" class="mini-card-img">
+            <div class="mini-card-name">Captain America</div>
+            <div class="mini-card-genre">Action</div>
+            <div class="mini-card-price">450 PHP</div>
+            <a href="/booking" class="mini-book-btn">Book</a>
+        </div>
+        <div class="mini-card">
+            <img src="{{ url_for('static', filename='images/movies/shazam.png') }}" alt="Shazam" class="mini-card-img">
+            <div class="mini-card-name">Shazam</div>
+            <div class="mini-card-genre">Action</div>
+            <div class="mini-badge-soldout">Sold Out</div>
+        </div>
+        <div class="mini-card">
+            <img src="{{ url_for('static', filename='images/movies/plankton_the_movie.png') }}" alt="Plankton The Movie" class="mini-card-img">
+            <div class="mini-card-name">Plankton The Movie</div>
+            <div class="mini-card-genre">Animation</div>
+            <div class="mini-badge-soldout">Sold Out</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== COMING SOON ===== -->
+<section class="home-section">
+    <div class="section-header">
+        <h2 class="home-section-title">📅 Coming Soon</h2>
+        <a href="/movies" class="see-all-link">See all →</a>
+    </div>
+    <div class="coming-soon-grid">
+        <div class="coming-card">
+            <img src="{{ url_for('static', filename='images/movies/how_to_train_your_dragon.png') }}" alt="How to Train Your Dragon" class="coming-card-img">
+            <div class="coming-card-info">
+                <div class="coming-card-name">How to Train Your Dragon</div>
+                <div class="coming-card-genre">Animation / Fantasy</div>
+                <div class="coming-card-date">📅 This Sunday</div>
+                <div class="coming-card-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Reserve</a>
+            </div>
+        </div>
+        <div class="coming-card">
+            <img src="{{ url_for('static', filename='images/movies/lilo_&_stitch.png') }}" alt="Lilo & Stitch" class="coming-card-img">
+            <div class="coming-card-info">
+                <div class="coming-card-name">Lilo &amp; Stitch</div>
+                <div class="coming-card-genre">Animation / Comedy</div>
+                <div class="coming-card-date">📅 This Sunday</div>
+                <div class="coming-card-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Reserve</a>
+            </div>
+        </div>
+        <div class="coming-card">
+            <img src="{{ url_for('static', filename='images/movies/wicked_for_good.png') }}" alt="Wicked For Good" class="coming-card-img">
+            <div class="coming-card-info">
+                <div class="coming-card-name">Wicked For Good</div>
+                <div class="coming-card-genre">Fantasy / Musical</div>
+                <div class="coming-card-date">📅 This Sunday</div>
+                <div class="coming-card-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Reserve</a>
+            </div>
+        </div>
+        <div class="coming-card">
+            <img src="{{ url_for('static', filename='images/movies/together.png') }}" alt="Together" class="coming-card-img">
+            <div class="coming-card-info">
+                <div class="coming-card-name">Together</div>
+                <div class="coming-card-genre">Horror</div>
+                <div class="coming-card-date">📅 This Friday</div>
+                <div class="coming-card-price">450 PHP</div>
+                <a href="/booking" class="book-now-btn">Reserve</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CINEMAS / VENUES ===== -->
+<section class="home-section dark-section">
+    <h2 class="home-section-title" style="margin-bottom:20px;">📍 Our Cinema Locations</h2>
+    <div class="venues-grid">
+        <div class="venue-card">
+            <div class="venue-icon">🏬</div>
+            <div class="venue-name">SM Seaside Cebu</div>
+            <div class="venue-address">SRP, Cebu City</div>
+            <div class="venue-screens">6 Screens</div>
+        </div>
+        <div class="venue-card">
+            <div class="venue-icon">🏬</div>
+            <div class="venue-name">Gaisano Grand Minglanilla</div>
+            <div class="venue-address">Minglanilla, Cebu</div>
+            <div class="venue-screens">4 Screens</div>
+        </div>
+        <div class="venue-card">
+            <div class="venue-icon">🏢</div>
+            <div class="venue-name">Nustar Cebu Cinema</div>
+            <div class="venue-address">SRP, Cebu City</div>
+            <div class="venue-screens">5 Screens</div>
+        </div>
+        <div class="venue-card">
+            <div class="venue-icon">🏛️</div>
+            <div class="venue-name">Cebu IL CORSO Cinema</div>
+            <div class="venue-address">South Road Properties</div>
+            <div class="venue-screens">4 Screens</div>
+        </div>
+        <div class="venue-card">
+            <div class="venue-icon">🎓</div>
+            <div class="venue-name">UC Cantao-an</div>
+            <div class="venue-address">Naga, Cebu</div>
+            <div class="venue-screens">2 Screens</div>
+        </div>
+        <div class="venue-card">
+            <div class="venue-icon">🌄</div>
+            <div class="venue-name">TOPS Cebu Skydom</div>
+            <div class="venue-address">Busay, Cebu City</div>
+            <div class="venue-screens">3 Screens</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW TO BOOK ===== -->
+<section class="home-section">
+    <h2 class="home-section-title" style="margin-bottom:24px;">🎟️ How to Book</h2>
+    <div class="steps-row">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-icon">🎬</div>
+            <div class="step-title">Browse Movies</div>
+            <div class="step-desc">Check what's showing this week on the Movies page.</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-icon">📍</div>
+            <div class="step-title">Pick a Venue</div>
+            <div class="step-desc">Choose your preferred cinema from our 6 locations.</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-icon">💺</div>
+            <div class="step-title">Select Seats</div>
+            <div class="step-desc">Pick your seats and confirm your schedule.</div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-icon">✅</div>
+            <div class="step-title">Get Your Ticket</div>
+            <div class="step-desc">Receive your e-ticket and enjoy the show!</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ABOUT & CONTACT ===== -->
+<section class="red-section">
+    <div class="red-overlay"></div>
+    <div class="about-block">
+        <h2 class="section-title">About Us</h2>
+        <p class="about-text">
+            TICK.IT is a Cinema ticketing system that allows you to book a ticket to watch movies
+            in cinema. The user of this system is the Admin and Staff. The Admin controls
+            updating what movies this week is available and others. While the Staff is in charge in
+            filling up the details needed from customer to book the ticket. There are specific
+            Malls and places that we offer like SM Seaside Cebu Cinema, Gaisano Grand
+            Minglanilla Cinema, Nustar Cebu Cinema, Cebu IL CORSO Cinema, UC (University of
+            Cantao-an) and TOPS Cebu Skydom.
+        </p>
+    </div>
+    <div class="contact-block">
+        <h2 class="section-title">Contacts</h2>
+        <p class="contact-text">
+            Feel free to contact our online social platforms<br>
+            (Facebook, Instagram, WhatsApp, Telegram, TikTok, Viber and Gmail):<br><br>
+            <strong>TICK.IT.ph</strong><br>
+            Contact no. 0975 - 078 - 8092
+        </p>
+    </div>
+    <div class="footer-bar">
+        <p class="footer-text">&#169; 2025 TICK.IT — All rights reserved</p>
+    </div>
+</section>
+<script>
+    // Carousel
+    let current = 0;
+    const total = 3;
+    const inner = document.getElementById("carouselInner");
+    const dots  = document.querySelectorAll(".carousel-dot");
+    function goToSlide(n) {
+        current = n;
+        inner.style.transform = "translateX(-" + (100 / total * n) + "%)";
+        dots.forEach((d, i) => d.classList.toggle("active", i === n));
+    }
+    setInterval(() => goToSlide((current + 1) % total), 4000);
+
+    // Profile dropdown
+    function toggleDropdown(e) {
+        e.preventDefault();
+        document.getElementById("dropdownMenu").classList.toggle("show");
+    }
+    document.addEventListener("click", function(e) {
+        const pd = document.getElementById("profileDropdown");
+        if (!pd.contains(e.target)) {
+            document.getElementById("dropdownMenu").classList.remove("show");
         }
-
-        setInterval(() => goToSlide((current + 1) % total), 4000);
-    </script>
+    });
+</script>
 
 </body>
 </html>

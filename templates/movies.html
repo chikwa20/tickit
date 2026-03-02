@@ -9,142 +9,361 @@
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar">
-        <div class="logo">TICK.<span>IT</span></div>
-        <div class="nav-buttons">
-            <a href="/movies" class="nav-btn active">Movies</a>
-            <a href="/" class="nav-btn">Home</a>
-            <a href="/booking" class="nav-btn">Booking</a>
-        </div>
-        <div class="search-wrap">
-            <input type="text" class="search-input" placeholder="Search...">
-            <div class="user-info">
-                <span class="user-greeting">Hi, {{ user_name }}!</span>
-                <a href="/logout" class="logout-btn">Logout</a>
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+        <div class="profile-dropdown" id="profileDropdown">
+            <a href="#" class="profile-btn" onclick="toggleDropdown(event)">
+                <img src="{{ url_for('static', filename='images/profile.png') }}" alt="Profile" class="profile-img">
+            </a>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-user-header">
+                    <div class="dropdown-user-name">{{ user_name }}</div>
+                    <div class="dropdown-user-role">Member</div>
+                </div>
+                <a href="/profile"         class="dropdown-item"><span class="dropdown-icon">👤</span> View Profile</a>
+                <a href="/settings"        class="dropdown-item"><span class="dropdown-icon">⚙️</span> Settings</a>
+                <a href="/change-password" class="dropdown-item"><span class="dropdown-icon">🔑</span> Change Password</a>
+                <a href="/my-bookings"     class="dropdown-item"><span class="dropdown-icon">🎟️</span> My Bookings</a>
+                <a href="/notifications"   class="dropdown-item"><span class="dropdown-icon">🔔</span> Notifications</a>
+                <div class="dropdown-divider"></div>
+                <a href="/help"            class="dropdown-item"><span class="dropdown-icon">❓</span> Help &amp; Support</a>
             </div>
         </div>
-    </nav>
-
-    <!-- ===== HERO CAROUSEL ===== -->
-    <section class="hero-section">
-        <div class="trending-label">TRENDING NOW</div>
-        <div class="carousel">
-            <div class="carousel-inner" id="carouselInner">
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='images/stranger_things.png') }}" alt="Stranger Things">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='images/avatar_fire_ash.png') }}" alt="Avatar Fire and Ash">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{{ url_for('static', filename='images/walking_dead.png') }}" alt="The Walking Dead">
-                </div>
-            </div>
-            <div class="carousel-dots">
-                <button class="carousel-dot active" onclick="goToSlide(0)"></button>
-                <button class="carousel-dot" onclick="goToSlide(1)"></button>
-                <button class="carousel-dot" onclick="goToSlide(2)"></button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== MOVIES SECTION ===== -->
-    <section class="movies-section">
-        <div class="movies-bg">
-            <div class="movies-overlay"></div>
-
-            <h2 class="movies-heading">Movies that will be available for this week...</h2>
-
-            <!-- ROW 1 -->
-            <div class="movies-grid">
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie1.png') }}" alt="Movie 1" class="movie-poster">
-                    <div class="movie-badge badge-yesterday">Played yesterday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie2.png') }}" alt="Movie 2" class="movie-poster">
-                    <div class="movie-badge badge-yesterday">Played yesterday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie3.png') }}" alt="Movie 3" class="movie-poster">
-                    <div class="movie-badge badge-today">Available today...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie4.png') }}" alt="Movie 4" class="movie-poster">
-                    <div class="movie-badge badge-today">Available today...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie5.png') }}" alt="Movie 5" class="movie-poster">
-                    <div class="movie-badge badge-sunday">Available this Sunday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie6.png') }}" alt="Movie 6" class="movie-poster">
-                    <div class="movie-badge badge-sunday">Available this Sunday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-            </div>
-
-            <!-- ROW 2 -->
-            <div class="movies-grid">
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie7.png') }}" alt="Movie 7" class="movie-poster">
-                    <div class="movie-badge badge-today">Available today...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie8.png') }}" alt="Movie 8" class="movie-poster">
-                    <div class="movie-badge badge-soldout">Sold out....</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie9.png') }}" alt="Movie 9" class="movie-poster">
-                    <div class="movie-badge badge-yesterday">Played yesterday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie10.png') }}" alt="Movie 10" class="movie-poster">
-                    <div class="movie-badge badge-soldout">Sold out....</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie11.png') }}" alt="Movie 11" class="movie-poster">
-                    <div class="movie-badge badge-friday">Available this Friday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-                <div class="movie-card">
-                    <img src="{{ url_for('static', filename='images/movies/movie12.png') }}" alt="Movie 12" class="movie-poster">
-                    <div class="movie-badge badge-sunday">Available this Sunday...</div>
-                    <div class="movie-price">450 PHP</div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="footer-bar">
-        <p class="footer-text">&#169; All rights reserved</p>
+        <span style="font-weight:700;font-size:13px;color:#fff;white-space:nowrap;">{{ user_name }}</span>
     </div>
+    <div class="logo">TICK.<span>IT</span></div>
+    <div class="nav-buttons">
+        <a href="/movies"  class="nav-btn active">Movies</a>
+        <a href="/home"    class="nav-btn">Home</a>
+        <a href="/booking" class="nav-btn">Booking</a>
+    </div>
+    <div class="search-wrap">
+        <input type="text" class="search-input" placeholder="Search movies..." id="searchInput">
+        <div class="user-info">
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </div>
+</nav>
 
-    <script>
-        let current = 0;
-        const total = 3;
-        const inner = document.getElementById("carouselInner");
-        const dots  = document.querySelectorAll(".carousel-dot");
+<!-- ===== HERO CAROUSEL ===== -->
+<section class="hero-section">
+    <div class="trending-label">TRENDING NOW</div>
+    <div class="carousel">
+        <div class="carousel-inner" id="carouselInner">
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/stranger_things_mov.png') }}" alt="Stranger Things">
+            </div>
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/avatar_fire_ash.png') }}" alt="Avatar Fire and Ash">
+            </div>
+            <div class="carousel-slide">
+                <img src="{{ url_for('static', filename='images/walking_dead_mov.png') }}" alt="The Walking Dead">
+            </div>
+        </div>
+        <div class="carousel-dots">
+            <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+            <button class="carousel-dot"        onclick="goToSlide(1)"></button>
+            <button class="carousel-dot"        onclick="goToSlide(2)"></button>
+        </div>
+    </div>
+</section>
 
-        function goToSlide(n) {
-            current = n;
-            inner.style.transform = "translateX(-" + (100 / total * n) + "%)";
-            dots.forEach((d, i) => d.classList.toggle("active", i === n));
-        }
+<!-- ===== MOVIES SECTION ===== -->
+<section class="movies-section" style="margin-top:24px;">
+    <div class="movies-bg">
+        <div class="movies-overlay"></div>
 
-        setInterval(() => goToSlide((current + 1) % total), 4000);
-    </script>
+        <div class="movies-header">
+            <h2 class="movies-heading">Movies available this week</h2>
+            <div class="filters-row">
+                <div class="filter-block">
+                    <span class="filter-label-tag">Genre:</span>
+                    <div class="genre-filter">
+                        <button class="genre-btn active" data-genre="all">All</button>
+                        <button class="genre-btn" data-genre="action">Action</button>
+                        <button class="genre-btn" data-genre="horror">Horror</button>
+                        <button class="genre-btn" data-genre="comedy">Comedy</button>
+                        <button class="genre-btn" data-genre="animation">Animation</button>
+                        <button class="genre-btn" data-genre="fantasy">Fantasy</button>
+                    </div>
+                </div>
+                <div class="filter-block">
+                    <span class="filter-label-tag">Status:</span>
+                    <div class="status-filter">
+                        <button class="status-btn active" data-status="all">All</button>
+                        <button class="status-btn" data-status="today"><span class="status-dot dot-today"></span>Available Today</button>
+                        <button class="status-btn" data-status="yesterday"><span class="status-dot dot-yesterday"></span>Played Yesterday</button>
+                        <button class="status-btn" data-status="friday"><span class="status-dot dot-friday"></span>This Friday</button>
+                        <button class="status-btn" data-status="sunday"><span class="status-dot dot-sunday"></span>This Sunday</button>
+                        <button class="status-btn" data-status="soldout"><span class="status-dot dot-soldout"></span>Sold Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="noResults" class="no-results" style="display:none;">
+            <p>No movies found matching your search.</p>
+        </div>
+
+        <!-- TRENDING ROW -->
+        <div class="trending-in-movies">
+            <h3 class="section-sub-heading">🔥 Trending Now — Also in Lineup</h3>
+            <div class="trending-row">
+                <div class="trending-list-card" data-movie-name="Stranger Things" data-genre="horror" data-status="today">
+                    <img src="{{ url_for('static', filename='images/movies/stranger_things_mov.png') }}" alt="Stranger Things" class="trending-list-img">
+                    <div class="trending-list-info">
+                        <div class="trending-list-name">Stranger Things</div>
+                        <div class="trending-list-meta">Sci-Fi / Horror</div>
+                        <div class="movie-stars" data-rating="8.7">★★★★☆ <span>8.7</span></div>
+                        <div class="trending-list-badge badge-today-sm">● Today</div>
+                        <div class="trending-list-price">450 PHP</div>
+                        <a href="/booking?movie=Stranger+Things" class="tlc-book-btn">Book Now</a>
+                    </div>
+                </div>
+                <div class="trending-list-card" data-movie-name="Avatar Fire and Ash" data-genre="action" data-status="today">
+                    <img src="{{ url_for('static', filename='images/movies/avatar_fire_ash_movie.png') }}" alt="Avatar: Fire and Ash" class="trending-list-img">
+                    <div class="trending-list-info">
+                        <div class="trending-list-name">Avatar: Fire and Ash</div>
+                        <div class="trending-list-meta">Sci-Fi / Action</div>
+                        <div class="movie-stars" data-rating="9.1">★★★★★ <span>9.1</span></div>
+                        <div class="trending-list-badge badge-today-sm">● Today</div>
+                        <div class="trending-list-price">450 PHP</div>
+                        <a href="/booking?movie=Avatar+Fire+and+Ash" class="tlc-book-btn">Book Now</a>
+                    </div>
+                </div>
+                <div class="trending-list-card" data-movie-name="The Walking Dead" data-genre="horror" data-status="today">
+                    <img src="{{ url_for('static', filename='images/movies/walking_dead_mov.png') }}" alt="The Walking Dead" class="trending-list-img">
+                    <div class="trending-list-info">
+                        <div class="trending-list-name">The Walking Dead</div>
+                        <div class="trending-list-meta">Horror / Drama</div>
+                        <div class="movie-stars" data-rating="8.2">★★★★☆ <span>8.2</span></div>
+                        <div class="trending-list-badge badge-today-sm">● Today</div>
+                        <div class="trending-list-price">450 PHP</div>
+                        <a href="/booking?movie=The+Walking+Dead" class="tlc-book-btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALL MOVIES GRID -->
+        <h3 class="section-sub-heading" style="margin-bottom:14px;">🎬 All Movies</h3>
+        <div class="movies-grid" id="moviesGrid">
+
+            <div class="movie-card" data-movie-name="Black Phone 2" data-genre="horror" data-status="yesterday" onclick="openBooking('Black Phone 2','7.8','Horror','Yesterday','450')">
+                <img src="{{ url_for('static', filename='images/movies/black_phone_2.png') }}" alt="Black Phone 2" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.8</div>
+                    <div class="mc-genre">Horror</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-yesterday">Yesterday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Captain America Brave New World" data-genre="action" data-status="yesterday" onclick="openBooking('Captain America: Brave New World','7.5','Action','Yesterday','450')">
+                <img src="{{ url_for('static', filename='images/movies/captain_america_brave_new_world.png') }}" alt="Captain America" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.5</div>
+                    <div class="mc-genre">Action</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-yesterday">Yesterday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Deadpool & Wolverine" data-genre="action" data-status="today" onclick="openBooking('Deadpool &amp; Wolverine','8.5','Action','Today','450')">
+                <img src="{{ url_for('static', filename='images/movies/deadpool_&_wolverine.png') }}" alt="Deadpool & Wolverine" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 8.5</div>
+                    <div class="mc-genre">Action</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-today">Today</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Hoppers" data-genre="animation" data-status="today" onclick="openBooking('Hoppers','7.9','Animation','Today','450')">
+                <img src="{{ url_for('static', filename='images/movies/Hoppers.png') }}" alt="Hoppers" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.9</div>
+                    <div class="mc-genre">Animation</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-today">Today</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="How to Train Your Dragon" data-genre="animation" data-status="sunday" onclick="openBooking('How to Train Your Dragon','8.8','Animation','This Sunday','450')">
+                <img src="{{ url_for('static', filename='images/movies/how_to_train_your_dragon.png') }}" alt="How to Train Your Dragon" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 8.8</div>
+                    <div class="mc-genre">Animation</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-sunday">Sunday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Lilo & Stitch" data-genre="animation" data-status="sunday" onclick="openBooking('Lilo &amp; Stitch','8.1','Animation','This Sunday','450')">
+                <img src="{{ url_for('static', filename='images/movies/lilo_&_stitch.png') }}" alt="Lilo & Stitch" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 8.1</div>
+                    <div class="mc-genre">Animation</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-sunday">Sunday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Minecraft Movie" data-genre="animation" data-status="today" onclick="openBooking('Minecraft Movie','7.6','Animation','Today','450')">
+                <img src="{{ url_for('static', filename='images/movies/minecraft_movie.png') }}" alt="Minecraft Movie" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.6</div>
+                    <div class="mc-genre">Animation</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-today">Today</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Plankton The Movie" data-genre="animation" data-status="soldout" onclick="openBooking('Plankton The Movie','7.2','Animation','Sold Out','450')">
+                <img src="{{ url_for('static', filename='images/movies/plankton_the_movie.png') }}" alt="Plankton The Movie" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.2</div>
+                    <div class="mc-genre">Animation</div>
+                    <button class="mc-book-btn soldout-btn" disabled>Sold Out</button>
+                </div>
+                <div class="movie-badge badge-soldout">Sold Out</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Plants vs Zombies" data-genre="comedy" data-status="yesterday" onclick="openBooking('Plants vs Zombies','6.9','Comedy','Yesterday','450')">
+                <img src="{{ url_for('static', filename='images/movies/plant_vs_zombies.png') }}" alt="Plants vs Zombies" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 6.9</div>
+                    <div class="mc-genre">Comedy</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-yesterday">Yesterday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Shazam" data-genre="action" data-status="soldout" onclick="openBooking('Shazam','7.4','Action','Sold Out','450')">
+                <img src="{{ url_for('static', filename='images/movies/shazam.png') }}" alt="Shazam" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.4</div>
+                    <div class="mc-genre">Action</div>
+                    <button class="mc-book-btn soldout-btn" disabled>Sold Out</button>
+                </div>
+                <div class="movie-badge badge-soldout">Sold Out</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Together" data-genre="horror" data-status="friday" onclick="openBooking('Together','7.0','Horror','This Friday','450')">
+                <img src="{{ url_for('static', filename='images/movies/together.png') }}" alt="Together" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 7.0</div>
+                    <div class="mc-genre">Horror</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-friday">Friday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+            <div class="movie-card" data-movie-name="Wicked For Good" data-genre="fantasy" data-status="sunday" onclick="openBooking('Wicked For Good','8.3','Fantasy','This Sunday','450')">
+                <img src="{{ url_for('static', filename='images/movies/wicked_for_good.png') }}" alt="Wicked For Good" class="movie-poster">
+                <div class="movie-card-overlay">
+                    <div class="mc-rating">★ 8.3</div>
+                    <div class="mc-genre">Fantasy</div>
+                    <button class="mc-book-btn">Book Now</button>
+                </div>
+                <div class="movie-badge badge-sunday">Sunday</div>
+                <div class="movie-price">450 PHP</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="footer-bar">
+    <p class="footer-text">&#169; All rights reserved</p>
+</div>
+
+<script>
+    // Carousel
+    let current = 0;
+    const total = 3;
+    const inner = document.getElementById("carouselInner");
+    const dots  = document.querySelectorAll(".carousel-dot");
+    function goToSlide(n) {
+        current = n;
+        inner.style.transform = "translateX(-" + (100 / total * n) + "%)";
+        dots.forEach((d, i) => d.classList.toggle("active", i === n));
+    }
+    setInterval(() => goToSlide((current + 1) % total), 4000);
+
+    // Profile dropdown
+    function toggleDropdown(e) {
+        e.preventDefault();
+        document.getElementById("dropdownMenu").classList.toggle("show");
+    }
+    document.addEventListener("click", function(e) {
+        const pd = document.getElementById("profileDropdown");
+        if (!pd.contains(e.target)) document.getElementById("dropdownMenu").classList.remove("show");
+    });
+
+    // Search & Filter
+    const searchInput   = document.getElementById('searchInput');
+    const movieCards    = document.querySelectorAll('.movie-card');
+    const trendingCards = document.querySelectorAll('.trending-list-card');
+    const noResults     = document.getElementById('noResults');
+    const genreButtons  = document.querySelectorAll('.genre-btn');
+    const statusButtons = document.querySelectorAll('.status-btn');
+    let currentGenre  = 'all';
+    let currentStatus = 'all';
+
+    searchInput.addEventListener('input', () => filterMovies());
+
+    genreButtons.forEach(btn => btn.addEventListener('click', function() {
+        genreButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentGenre = this.getAttribute('data-genre');
+        filterMovies();
+    }));
+    statusButtons.forEach(btn => btn.addEventListener('click', function() {
+        statusButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentStatus = this.getAttribute('data-status');
+        filterMovies();
+    }));
+
+    function filterMovies() {
+        const term = searchInput.value.toLowerCase().trim();
+        let visible = 0;
+        movieCards.forEach(card => {
+            const ok = card.getAttribute('data-movie-name').toLowerCase().includes(term)
+                && (currentGenre  === 'all' || card.getAttribute('data-genre')  === currentGenre)
+                && (currentStatus === 'all' || card.getAttribute('data-status') === currentStatus);
+            card.style.display = ok ? 'block' : 'none';
+            if (ok) visible++;
+        });
+        trendingCards.forEach(card => {
+            const ok = card.getAttribute('data-movie-name').toLowerCase().includes(term)
+                && (currentGenre  === 'all' || card.getAttribute('data-genre')  === currentGenre)
+                && (currentStatus === 'all' || card.getAttribute('data-status') === currentStatus);
+            card.style.display = ok ? 'flex' : 'none';
+        });
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    // Quick-book from movie card — redirect to booking page with movie pre-selected
+    function openBooking(movie, rating, genre, status, price) {
+        if (status === 'Sold Out') return;
+        const params = new URLSearchParams({ movie, rating, genre, status, price });
+        window.location.href = '/booking?' + params.toString();
+    }
+</script>
 
 </body>
 </html>

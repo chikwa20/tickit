@@ -72,50 +72,6 @@ body {
     color: #fff;
 }
 
-.search-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.search-input {
-    width: 200px;
-    height: 38px;
-    background: #D9D9D9;
-    border-radius: 221px;
-    border: none;
-    outline: none;
-    padding: 0 16px;
-    font-size: 14px;
-    color: #000;
-}
-
-.search-input::placeholder {
-    color: #888;
-}
-
-.profile-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: transform 0.2s, opacity 0.2s;
-}
-
-.profile-btn:hover {
-    transform: scale(1.1);
-    opacity: 0.8;
-}
-
-.profile-img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 50%;
-    display: block;
-}
-
 /* ============================
    MAIN BACKGROUND
    ============================ */
@@ -266,7 +222,6 @@ body {
         padding: 12px 16px;
     }
     .nav-btn { width: 90px; font-size: 14px; height: 36px; }
-    .search-input { width: 130px; }
 }
 
 /* ============================
@@ -318,3 +273,28 @@ body {
 
 .alert-warning { background: rgba(180,120,0,0.25); border: 1px solid #cc8800; color: #ffd966; }
 .alert-info    { background: rgba(0,80,180,0.25);  border: 1px solid #0055cc; color: #99ccff; }
+/* Consistent navbar additions */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 70px;
+    gap: 14px;
+}
+.nav-btn { width: 108px; height: 36px; font-size: 14px; }
+.nav-spacer { flex: 1; }
+.nav-auth-links { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+.nav-auth-btn {
+    display: flex; align-items: center; justify-content: center;
+    height: 34px; padding: 0 18px;
+    background: rgba(217,217,217,0.15);
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 221px;
+    text-decoration: none; font-weight: 700; font-size: 13px; color: #fff;
+    transition: all 0.2s;
+}
+.nav-auth-btn:hover { background: rgba(204,0,0,0.4); border-color: #cc0000; }
+.nav-auth-btn.active { background: #cc0000; border-color: #cc0000; }
+.forgot-row { text-align: right; margin-bottom: 10px; }
+.forgot-link { font-size: 12px; color: #aaa; text-decoration: underline; }
+.forgot-link:hover { color: #fff; }
