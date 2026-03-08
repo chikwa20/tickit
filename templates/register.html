@@ -9,17 +9,18 @@
 </head>
 <body>
 
-    <!-- NAVBAR - consistent across all pages -->
-    <nav class="navbar">
+    <!-- NAVBAR -->
+    <nav class="navbar" style="position:relative;">
         <div class="logo">TICK.<span>IT</span></div>
-        <div class="nav-buttons">
-            <a href="/movies" class="nav-btn">Movies</a>
-            <a href="/home" class="nav-btn">Home</a>
+        <!-- Centered nav buttons -->
+        <div style="position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;">
+            <a href="/movies"  class="nav-btn">Movies</a>
+            <a href="/home"    class="nav-btn">Home</a>
             <a href="/booking" class="nav-btn">Booking</a>
         </div>
-        <div class="nav-spacer"></div>
-        <div class="nav-auth-links">
-            <a href="/login" class="nav-auth-btn">Sign In</a>
+        <!-- Right: Sign In / Sign Up -->
+        <div class="nav-auth-links" style="margin-left:auto;">
+            <a href="/login"    class="nav-auth-btn">Sign In</a>
             <a href="/register" class="nav-auth-btn active">Sign Up</a>
         </div>
     </nav>

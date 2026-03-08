@@ -103,7 +103,7 @@
                                     </span>
                                 </td>
                                 <td style="font-size:12px;white-space:nowrap;color:#888;">
-                                    {{ u.created_at[:10] if u.created_at else '—' }}
+                                    {{ u.created_at.strftime('%Y-%m-%d') if u.created_at else '—' }}
                                 </td>
                                 <td>
                                     <div class="tbl-actions">
